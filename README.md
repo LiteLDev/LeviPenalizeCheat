@@ -1,8 +1,6 @@
-# LeviLamina Plugin Template
+# LeviAntiCheat Custom Punishment Template
 
-A LeviLamina plugin template
-
-This plugin is a template for developing LeviLamina plugins.
+A plugin template for LeviAntiCheat's custom punishment
 
 ## Install
 
