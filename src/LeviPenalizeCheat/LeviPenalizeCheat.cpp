@@ -1,29 +1,28 @@
 #include "LeviPenalizeCheat/LeviPenalizeCheat.h"
 #include "LeviAntiCheat/PlayerCheatEvent.h"
 #include "ll/api/event/EventBus.h"
-#include "ll/api/plugin/NativePlugin.h"
-#include "ll/api/plugin/RegisterHelper.h"
-#include "magic_enum.hpp"
-#include <memory>
 
-namespace lac {
+#include "ll/api/mod/RegisterHelper.h"
 
-static std::unique_ptr<LeviPenalizeCheat> instance;
+namespace levi_pc {
 
-LeviPenalizeCheat& LeviPenalizeCheat::getInstance() { return *instance; }
+LeviPenalizeCheat& LeviPenalizeCheat::getInstance() {
+    static LeviPenalizeCheat instance;
+    return instance;
+}
 
 bool LeviPenalizeCheat::load() {
-    getSelf().getLogger().info("Loading...");
-    // Code for loading the plugin goes here.
+    getSelf().getLogger().debug("Loading...");
+    // Code for loading the mod goes here.
     return true;
 }
 
 bool LeviPenalizeCheat::enable() {
-    auto& logger = getSelf().getLogger();
-    getSelf().getLogger().info("Enabling...");
+    getSelf().getLogger().debug("Enabling...");
+    // Code for enabling the mod goes here.
     ll::event::EventBus::getInstance().emplaceListener<lac::punish::PlayerCheatEvent>(
         [&](lac::punish::PlayerCheatEvent& ev) {
-            logger.warn(
+            getSelf().getLogger().warn(
                 "\"{}\" has been detected using: {}",
                 ev.self().getRealName(),
                 magic_enum::enum_name(ev.mCheatType)
@@ -34,11 +33,11 @@ bool LeviPenalizeCheat::enable() {
 }
 
 bool LeviPenalizeCheat::disable() {
-    getSelf().getLogger().info("Disabling...");
-    // Code for disabling the plugin goes here.
+    getSelf().getLogger().debug("Disabling...");
+    // Code for disabling the mod goes here.
     return true;
 }
 
-} // namespace lac
+} // namespace levi_pc
 
-LL_REGISTER_PLUGIN(lac::LeviPenalizeCheat, lac::instance);
+LL_REGISTER_MOD(levi_pc::LeviPenalizeCheat, levi_pc::LeviPenalizeCheat::getInstance());
