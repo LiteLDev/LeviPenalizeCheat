@@ -1,5 +1,7 @@
 #include "LeviPenalizeCheat/LeviPenalizeCheat.h"
+#include "LeviAntiCheat/PlayerBanWaveEvent.h"
 #include "LeviAntiCheat/PlayerCheatEvent.h"
+#include "LeviAntiCheat/SusClientEvent.h"
 #include "ll/api/event/EventBus.h"
 
 #include "ll/api/mod/RegisterHelper.h"
@@ -29,6 +31,15 @@ bool LeviPenalizeCheat::enable() {
             );
         }
     );
+    ll::event::EventBus::getInstance().emplaceListener<lac::punish::PlayerBanWaveEvent>(
+        [&](lac::punish::PlayerBanWaveEvent& ev) {
+            getSelf().getLogger().warn("\"{}\" has been: {}", ev.self().getRealName(), magic_enum::enum_name(ev.mType));
+        }
+    );
+    ll::event::EventBus::getInstance().emplaceListener<lac::punish::SusClientEvent>([&](lac::punish::SusClientEvent& ev
+                                                                                    ) {
+        getSelf().getLogger().warn("\"{}\" has been detected using suspicious client", ev.mName);
+    });
     return true;
 }
 
