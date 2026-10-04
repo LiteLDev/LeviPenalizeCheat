@@ -2,6 +2,7 @@
 #include "ll/api/event/Cancellable.h"
 #include "ll/api/event/Event.h"
 #include "mc/platform/UUID.h"
+#include <mc/deps/nbt/CompoundTagVariant.h>
 
 #include <unordered_map>
 #include <variant>
@@ -19,6 +20,13 @@ public:
     : mUuid(uuid),
       mName(name),
       mIp(ip) {}
+
+    void serialize(CompoundTag& nbt) const override {
+        Cancellable::serialize(nbt);
+        nbt["uuid"] = mUuid.asString();
+        nbt["name"] = mName;
+        nbt["ip"]   = mIp;
+    }
 };
 
 } // namespace lac::punish

@@ -3,6 +3,7 @@
 #include "PunishType.h"
 #include "ll/api/event/Cancellable.h"
 #include "ll/api/event/player/PlayerEvent.h"
+#include <magic_enum.hpp>
 
 
 namespace lac::punish {
@@ -16,6 +17,30 @@ public:
     ExtraInfo const&  mExtraData;
     int const&        mDuration;
     PunishType const& mType;
+
+public:
+    constexpr explicit PlayerCheatEvent(
+        Player&           player,
+        CheckType const&  cheatType,
+        ExtraInfo const&  info,
+        int const&        duration,
+        PunishType const& punishType
+    )
+    : Cancellable(player),
+      mCheatType(cheatType),
+      mExtraData(info),
+      mDuration(duration),
+      mType(punishType) {}
+
+    void serialize(CompoundTag& nbt) const override {
+        Cancellable::serialize(nbt);
+        nbt["check type"] = magic_enum::enum_name(mCheatType);
+        for (auto& [name, value] : mExtraData) {
+            std::visit([&](auto& value) -> void { nbt["extra data"][name] = value; }, value);
+        }
+        nbt["duration"]    = mDuration;
+        nbt["punish type"] = magic_enum::enum_name(mType);
+    }
 };
 
 } // namespace lac::punish

@@ -7,6 +7,7 @@ enum class CheckType {
     Timer,
     Spam,
     InvalidFilterString,
+    IllegalTrade,
     IllegalBreaking,
     FakeName,
     SpawnXpOrbs,
