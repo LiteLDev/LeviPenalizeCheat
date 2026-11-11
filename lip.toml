@@ -9,8 +9,7 @@ tags = ["anticheat"]
 logo = "https://example.com/my-mod/avatar.png"
 
 # The release builds only the server (LeviLamina target_type=server) for win-x64.
-# The default variant "" and the variant "server" hold the same server entry, so the mod
-# installs both as github.com/LiteLDev/LeviPenalizeCheat and as ...LeviPenalizeCheat#server.
+# It is installed as github.com/LiteLDev/LeviPenalizeCheat (the default variant "").
 
 [[variants.""]]
 side = "server"
@@ -20,18 +19,6 @@ platform = "win-x64"
 "github.com/LiteLDev/LeviLamina" = "1.9.*"
 
 [[variants."".assets]]
-type = "zip"
-urls = ["https://{{id}}/releases/download/v{{version}}/LeviPenalizeCheat-server-windows-x64.zip"]
-place = [{ src = "LeviPenalizeCheat/", dest = "plugins/LeviPenalizeCheat/" }]
-
-[[variants.server]]
-side = "server"
-platform = "win-x64"
-
-[variants.server.deps]
-"github.com/LiteLDev/LeviLamina" = "1.9.*"
-
-[[variants.server.assets]]
 type = "zip"
 urls = ["https://{{id}}/releases/download/v{{version}}/LeviPenalizeCheat-server-windows-x64.zip"]
 place = [{ src = "LeviPenalizeCheat/", dest = "plugins/LeviPenalizeCheat/" }]
