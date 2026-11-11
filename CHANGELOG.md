@@ -10,3 +10,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Replace tooth.json with lip.toml (format 4, lip 0.40.0). The package installs as both `github.com/LiteLDev/LeviPenalizeCheat` and `github.com/LiteLDev/LeviPenalizeCheat#server`.
+- The release workflow fails if the `version` in lip.toml does not match the release tag.
