@@ -74,6 +74,15 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Check lip.toml version
+        run: |
+          expected="${GITHUB_REF_NAME#v}"
+          declared="$(grep -m 1 '^version = ' lip.toml | cut -d '"' -f 2)"
+          if [ "$declared" != "$expected" ]; then
+            echo "lip.toml version $declared does not match tag $expected"
+            exit 1
+          fi
+
       - uses: actions/download-artifact@v8
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}-${{ matrix.target_type }}-windows-x64
